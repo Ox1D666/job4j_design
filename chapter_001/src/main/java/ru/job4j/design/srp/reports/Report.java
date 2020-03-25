@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface Report {
 
-    String generateReport(List<Employer> makeReport);
+    String generateReport(List<String> makeReport);
 }

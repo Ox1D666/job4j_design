@@ -7,5 +7,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public interface Department {
-    public List<Employer> makeReport(Predicate<Employer> filter, Store store);
+
+    List<String> makeReport(Predicate<Employer> filter, Store store);
 }

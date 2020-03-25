@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 public class AccountingDepartment implements Department {
     @Override
-    public List<Employer> makeReport(Predicate<Employer> filter, Store store) {
+    public List<String> makeReport(Predicate<Employer> filter, Store store) {
         return null;
     }
 }
