@@ -27,7 +27,7 @@ public class EvenIterator implements Iterator<Integer> {
     @Override
     public boolean hasNext() {
         for (int i = index; i < array.length; i++) {
-            if (array[index] % 2 == 0) {
+            if (array[i] % 2 == 0) {
                 return true;
             }
         }
