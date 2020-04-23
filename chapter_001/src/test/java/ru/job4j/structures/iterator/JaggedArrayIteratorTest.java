@@ -1,6 +1,7 @@
 package ru.job4j.structures.iterator;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.structures.iterator.JaggedArrayIterator;
 
