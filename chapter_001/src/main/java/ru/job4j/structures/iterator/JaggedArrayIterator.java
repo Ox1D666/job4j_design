@@ -17,8 +17,8 @@ public class  JaggedArrayIterator<T> implements Iterator<Integer> {
     }
 
     /**
-     * Checking for the next item
-     * @return true or false
+     * Checking for the next item.
+     * @return true if we have next num.
      */
     @Override
     public boolean hasNext() {
@@ -27,7 +27,7 @@ public class  JaggedArrayIterator<T> implements Iterator<Integer> {
 
     /**
      * Get the value of the next element, and move cursor.
-     * @return array value.
+     * @return int value.
      */
     @Override
     public Integer next() {
