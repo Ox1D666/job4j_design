@@ -1,9 +1,6 @@
 package ru.job4j.structures.iterator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
