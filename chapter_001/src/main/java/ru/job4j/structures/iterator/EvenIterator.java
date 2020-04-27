@@ -22,6 +22,7 @@ public class EvenIterator implements Iterator<Integer> {
 
     /**
      * Check next even number
+     *
      * @return true, array have once more even num/false array don't have more even number
      */
     @Override
@@ -37,14 +38,14 @@ public class EvenIterator implements Iterator<Integer> {
 
     /**
      * Find next even number(after index) in array.
+     *
      * @return value of number.
      */
     @Override
     public Integer next() throws NoSuchElementException {
         if (!hasNext()) {
             throw new NoSuchElementException();
-        } else {
-            return array[index++];
         }
+        return array[index++];
     }
 }
