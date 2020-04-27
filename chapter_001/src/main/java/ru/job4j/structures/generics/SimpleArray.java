@@ -1,6 +1,7 @@
 package ru.job4j.structures.generics;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Creating and managing array.
@@ -9,7 +10,6 @@ import java.util.Iterator;
 public class SimpleArray<T> implements Iterable<T> {
     Object[] array;
     int index = 0;
-    T model;
 
     /**
      * Constructor for array.
@@ -23,7 +23,7 @@ public class SimpleArray<T> implements Iterable<T> {
      * Add element in first free cell.
      * @param model
      */
-    private void add(T model) {
+    public void add(T model) {
         array[index++] = model;
     }
 
@@ -32,17 +32,21 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param index place for new element.
      * @param model new element.
      */
-    private void set(int index, T model) {
-        array[index] = model;
+    public void set(int index, T model) {
+        if (Objects.checkIndex(index, array.length) == index) {
+            array[index] = model;
+        }
     }
 
     /**
      * Delete element, and move array one cell to the left.
      * @param index place of deleted el.
      */
-    private void remove(int index) {
-        for (int i = index; i < array.length - index; i++) {
-            array[i] = array[i + 1];
+    public void remove(int index) {
+        if (Objects.checkIndex(index, array.length) == index) {
+            for (int i = index; i < array.length - index; i++) {
+                array[i] = array[i + 1];
+            }
         }
     }
 
@@ -51,8 +55,12 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param index place of el.
      * @return el value.
      */
-    private Object get(int index) {
-        return array[index];
+    public Object get(int index) {
+        if (Objects.checkIndex(index, array.length) == index) {
+            return array[index];
+        } else {
+            throw new IndexOutOfBoundsException();
+        }
     }
 
     @Override
@@ -60,12 +68,12 @@ public class SimpleArray<T> implements Iterable<T> {
         return new Iterator<T>() {
             @Override
             public boolean hasNext() {
-                return false;
+                return index < array.length;
             }
 
             @Override
             public T next() {
-                return array[index++];
+                return (T) array[index++];
             }
         };
     }
