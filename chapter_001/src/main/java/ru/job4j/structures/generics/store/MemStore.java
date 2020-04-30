@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Object storage.
+ *
  * @param <T>
  */
 public final class MemStore<T extends Base> implements Store<T> {
@@ -15,6 +16,7 @@ public final class MemStore<T extends Base> implements Store<T> {
 
     /**
      * Add item in storage.
+     *
      * @param model - new item.
      */
     @Override
@@ -24,47 +26,40 @@ public final class MemStore<T extends Base> implements Store<T> {
 
     /**
      * Exchange one for another.
-     * @param id item to replace.
+     *
+     * @param id    item to replace.
      * @param model - new item.
      * @return success or not.
      */
     @Override
     public boolean replace(String id, T model) {
         boolean result = false;
-        int count = 0;
-        for (var element : this.mem) {
-            if (element.getId().equals(id)) {
-                mem.set(count, model);
-                result = true;
-                break;
-            }
-            count++;
+        if (indexOf(id) > -1) {
+            this.mem.set(indexOf(id), model);
+            result = true;
         }
         return result;
     }
 
     /**
      * Delete item.
+     *
      * @param id item which we need to delete.
      * @return success or not.
      */
     @Override
     public boolean delete(String id) {
         boolean result = false;
-        int count = 0;
-        for (var element : this.mem) {
-            if (element.getId().equals(id)) {
-                this.mem.remove(count);
-                result = true;
-                break;
-            }
-            count++;
+        if (indexOf(id) > -1) {
+            this.mem.remove(indexOf(id));
+            result = true;
         }
         return result;
     }
 
     /**
      * Find item by id.
+     *
      * @param id item which we need to return.
      * @return item.
      */
@@ -78,5 +73,21 @@ public final class MemStore<T extends Base> implements Store<T> {
             }
         }
         return item;
+    }
+
+    /**
+     * @param id of item.
+     * @return index of item.
+     */
+    private int indexOf(String id) {
+        int result = -1;
+        for (var el : this.mem) {
+            if (el.getId().equals(id)) {
+                ++result;
+                break;
+            }
+            result++;
+        }
+        return result;
     }
 }
