@@ -7,27 +7,29 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class SimpleArrayTest {
-    SimpleArray<Integer> simpleArray;
-
-    @Before
-    public void setUp() {
-        simpleArray = new SimpleArray<>(4);
-    }
 
     @Test
     public void whenAddSetRemoveAndGetElement() {
-        simpleArray.add(1);
-        simpleArray.add(2);
-        simpleArray.add(3);
-        simpleArray.add(4);
+        SimpleArray<Integer> simpleArray = new SimpleArray<>(new Integer[] {1, 2, 3, 4});
         simpleArray.set(1, 99);
         assertThat(simpleArray.get(1), is(99));
         simpleArray.remove(1);
         assertThat(simpleArray.get(1), is(3));
     }
-    @Test
-    public void whenUseBuiltInIterator() {
 
+    @Test
+    public void whenMultiCallhasNextThenTrue() {
+        SimpleArray<Integer> simpleArray = new SimpleArray<>(new Integer[] {1, 2, 3});
+        assertThat(simpleArray.iterator().hasNext(), is(true));
+        assertThat(simpleArray.iterator().hasNext(), is(true));
+    }
+
+    @Test
+    public void whenReadSequence() {
+        SimpleArray<Integer> simpleArray = new SimpleArray<>(new Integer[] {1, 2, 3});
+        assertThat(simpleArray.iterator().next(), is(1));
+        assertThat(simpleArray.iterator().next(), is(2));
+        assertThat(simpleArray.iterator().next(), is(3));
     }
 }
 

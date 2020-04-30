@@ -8,15 +8,15 @@ import java.util.Objects;
  * @param <T>
  */
 public class SimpleArray<T> implements Iterable<T> {
-    Object[] array;
-    int index = 0;
+    private final Object[] array;
+    private int index = 0;
 
     /**
      * Constructor for array.
-     * @param size - array size.
+     * @param array - array with items.
      */
-    public SimpleArray(int size) {
-        this.array = new Object[size];
+    public SimpleArray(Object[] array) {
+        this.array = array;
     }
 
     /**
@@ -33,9 +33,8 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param model new element.
      */
     public void set(int index, T model) {
-        if (Objects.checkIndex(index, array.length) == index) {
-            array[index] = model;
-        }
+        Objects.checkIndex(index, array.length);
+        array[index] = model;
     }
 
     /**
@@ -56,10 +55,10 @@ public class SimpleArray<T> implements Iterable<T> {
      * @return el value.
      */
     public Object get(int index) {
-        if (Objects.checkIndex(index, array.length) == index) {
-            return array[index];
-        } else {
+        if (!(Objects.checkIndex(index, array.length) == index)) {
             throw new IndexOutOfBoundsException();
+        } else {
+            return array[index];
         }
     }
 
