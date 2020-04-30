@@ -21,7 +21,7 @@ public class SimpleArrayList<T> implements Iterable<T> {
     /**
      * This var is modified when we change the list.
      */
-    int modCount = 0;
+    private int modCount = 0;
 
     /**
      * Constructor for arraylist, with default size 100.
@@ -62,17 +62,16 @@ public class SimpleArrayList<T> implements Iterable<T> {
     public T get(int index) {
         Objects.checkIndex(index, container.length);
         T result = (T) container[index];
-        while (iterator().hasNext()) {
-            T item = iterator().next();
-            if (item.equals(container[index])) {
-                result = item;
+        if (!iterator().hasNext()) {
+            throw new IndexOutOfBoundsException();
+        }
+        for (var item: container) {
+            if (item.equals(result)) {
+                result = (T) item;
                 break;
             } else {
                 throw new IndexOutOfBoundsException();
             }
-        }
-        if (!iterator().hasNext()) {
-            throw new IndexOutOfBoundsException();
         }
         return result;
     }
