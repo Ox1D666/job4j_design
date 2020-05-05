@@ -1,6 +1,8 @@
 package ru.job4j.structures.generics;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SimpleLinkedList<E> implements Iterable<E> {
@@ -18,35 +20,33 @@ public class SimpleLinkedList<E> implements Iterable<E> {
 
     private int modCount = 0;
 
-    public SimpleLinkedList() {
-        this.head = new Node<>(null, null, this.tail);
-        this.tail = new Node<>(this.head, null, null);
-    }
-
     private static class Node<E> {
-        E item;
+        E value;
         Node<E> next;
         Node<E> prev;
 
-        Node(Node<E> prev, E element, Node<E> next) {
-            this.item = element;
-            this.next = next;
-            this.prev = prev;
+        Node(E element) {
+            this.value = element;
         }
     }
 
     /**
      * Appends the specified element to the end of this list.
-     * @param e the element to add
+     * @param value the element to add
      */
-    public void addLast(E e) {
-        Node<E> prev = tail;
-        Node<E> newNode = new Node<>(prev, e, null);
-        tail = newNode;
-        if (prev == null) {
+    public void add(E value) {
+        var newNode = new Node<E>(value);
+        if (head == null) {
             head = newNode;
+        } else if (tail == null) {
+            tail = newNode;
+            head.next = tail;
+            tail.prev = head;
         } else {
-            prev.next = newNode;
+            tail.next = newNode;
+            var old = tail;
+            tail = newNode;
+            newNode.prev = old;
         }
         size++;
         modCount++;
@@ -54,19 +54,44 @@ public class SimpleLinkedList<E> implements Iterable<E> {
 
     /**
      * Returns the element at the specified position in this list.
-     *
      * @param index index of the element to return
      * @return the element at the specified position in this list
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
     public E get(int index) {
         Objects.checkIndex(index, size);
-
-        return
+        Node<E> result = this.head;
+        for (int i = 0; i < index; i++) {
+            result = result.next;
+        }
+        return result.value;
     }
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new Iterator<E>() {
+            private final int expectedModCount = modCount;
+            private Node<E> current = head;
+            private int iterIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                return iterIndex < size;
+            }
+
+            @Override
+            public E next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                E element = current.value;
+                current = current.next;
+                iterIndex++;
+                return element;
+            }
+        };
     }
 }
