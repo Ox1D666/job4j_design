@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * Object storage.
- *
  * @param <T>
  */
 public final class MemStore<T extends Base> implements Store<T> {
@@ -16,7 +15,6 @@ public final class MemStore<T extends Base> implements Store<T> {
 
     /**
      * Add item in storage.
-     *
      * @param model - new item.
      */
     @Override
@@ -26,7 +24,6 @@ public final class MemStore<T extends Base> implements Store<T> {
 
     /**
      * Exchange one for another.
-     *
      * @param id    item to replace.
      * @param model - new item.
      * @return success or not.
@@ -34,8 +31,9 @@ public final class MemStore<T extends Base> implements Store<T> {
     @Override
     public boolean replace(String id, T model) {
         boolean result = false;
-        if (indexOf(id) > -1) {
-            this.mem.set(indexOf(id), model);
+        int index = indexOf(id);
+        if (index > -1) {
+            this.mem.set(index, model);
             result = true;
         }
         return result;
@@ -43,7 +41,6 @@ public final class MemStore<T extends Base> implements Store<T> {
 
     /**
      * Delete item.
-     *
      * @param id item which we need to delete.
      * @return success or not.
      */
@@ -59,7 +56,6 @@ public final class MemStore<T extends Base> implements Store<T> {
 
     /**
      * Find item by id.
-     *
      * @param id item which we need to return.
      * @return item.
      */
