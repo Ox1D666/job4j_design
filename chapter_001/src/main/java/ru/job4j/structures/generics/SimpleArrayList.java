@@ -60,20 +60,8 @@ public class SimpleArrayList<T> implements Iterable<T> {
      * @throws IndexOutOfBoundsException
      */
     public T get(int index) {
-        Objects.checkIndex(index, container.length);
-        T result = (T) container[index];
-        if (!iterator().hasNext()) {
-            throw new IndexOutOfBoundsException();
-        }
-        for (var item: container) {
-            if (item.equals(result)) {
-                result = (T) item;
-                break;
-            } else {
-                throw new IndexOutOfBoundsException();
-            }
-        }
-        return result;
+        Objects.checkIndex(index, this.index);
+        return (T) container[index];
     }
 
     @Override
