@@ -1,6 +1,5 @@
 package ru.job4j.structures.set;
 
-import ru.job4j.structures.generics.store.SimpleArray;
 import ru.job4j.structures.list.SimpleArrayList;
 
 import java.util.Iterator;
@@ -8,10 +7,10 @@ import java.util.Iterator;
 public class SimpleSet<T> implements Iterable<T> {
     SimpleArrayList<T> simpleArrayList = new SimpleArrayList<T>();
 
-    public boolean add(T value) {
+    public void add(T value) {
         boolean match = false;
-        for (int i = 0; i < simpleArrayList.getIndex(); i++) {
-            if (simpleArrayList.get(i).equals(value)) {
+        for (int i = 0; i < simpleArrayList.getSize(); i++) {
+            if (value.equals(simpleArrayList.get(i))) {
                 match = true;
                 break;
             }
@@ -19,7 +18,6 @@ public class SimpleSet<T> implements Iterable<T> {
         if (!match) {
             simpleArrayList.add(value);
         }
-        return match;
     }
 
     @Override

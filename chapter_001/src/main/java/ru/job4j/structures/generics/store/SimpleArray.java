@@ -1,4 +1,4 @@
-package ru.job4j.structures.generics;
+package ru.job4j.structures.generics.store;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -10,6 +10,14 @@ import java.util.Objects;
 public class SimpleArray<T> implements Iterable<T> {
     private final Object[] array;
     private int index = 0;
+
+    public int getIndex() {
+        return index;
+    }
+
+    public Object[] getArray() {
+        return array;
+    }
 
     /**
      * Constructor for array.
