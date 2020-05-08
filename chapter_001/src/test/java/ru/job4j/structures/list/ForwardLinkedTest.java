@@ -1,4 +1,4 @@
-package ru.job4j.structures.generics;
+package ru.job4j.structures.list;
 
 import org.junit.Test;
 
@@ -10,12 +10,14 @@ import static org.junit.Assert.assertThat;
 
 public class ForwardLinkedTest {
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void whenDeleteFirst() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
         linked.add(1);
-        linked.deleteFirst();
-        linked.iterator().next();
+        linked.add(2);
+        Integer expect = linked.deleteFirst();
+        Iterator<Integer> it = linked.iterator();
+        assertThat(expect, is(1));
     }
 
     @Test(expected = NoSuchElementException.class)

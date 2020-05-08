@@ -1,4 +1,4 @@
-package ru.job4j.structures.generics;
+package ru.job4j.structures.list;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -39,12 +39,15 @@ public class ForwardLinked<T> implements Iterable<T> {
         return result.value;
     }
 
-    public void deleteFirst() {
-        if (iterator().hasNext()) {
+    public T deleteFirst() {
+        T result = null;
+        if (head != null) {
+            result = head.value;
             head = head.next;
         } else {
             throw new NoSuchElementException();
         }
+        return result;
     }
 
     public T deleteLast() {
