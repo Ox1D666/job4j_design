@@ -8,6 +8,12 @@ public class SimpleSet<T> implements Iterable<T> {
     SimpleArrayList<T> simpleArrayList = new SimpleArrayList<T>();
 
     public void add(T value) {
+        if (!contains(value)) {
+            simpleArrayList.add(value);
+        }
+    }
+
+    public boolean contains(T value) {
         boolean match = false;
         for (int i = 0; i < simpleArrayList.getSize(); i++) {
             if (value.equals(simpleArrayList.get(i))) {
@@ -15,9 +21,7 @@ public class SimpleSet<T> implements Iterable<T> {
                 break;
             }
         }
-        if (!match) {
-            simpleArrayList.add(value);
-        }
+        return match;
     }
 
     @Override
