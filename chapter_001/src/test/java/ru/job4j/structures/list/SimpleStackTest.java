@@ -1,4 +1,4 @@
-package ru.job4j.structures.generics;
+package ru.job4j.structures.list;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -18,7 +18,7 @@ public class SimpleStackTest {
     public void whenPushPollThenPushPoll() {
         SimpleStack<Integer> stack = new SimpleStack<>();
         stack.push(1);
-        stack.pop();
+        System.out.println(stack.pop());
         stack.push(2);
         assertThat(stack.pop(), is(2));
     }

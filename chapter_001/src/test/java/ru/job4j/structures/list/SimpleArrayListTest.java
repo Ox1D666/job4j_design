@@ -1,4 +1,4 @@
-package ru.job4j.structures.generics;
+package ru.job4j.structures.list;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;

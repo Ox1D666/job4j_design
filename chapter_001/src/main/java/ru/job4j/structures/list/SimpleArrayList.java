@@ -1,4 +1,4 @@
-package ru.job4j.structures.generics;
+package ru.job4j.structures.list;
 
 import java.util.*;
 
@@ -14,9 +14,9 @@ public class SimpleArrayList<T> implements Iterable<T> {
     private Object[] container;
 
     /**
-     * Place number of the item in arraylist
+     * Amount of elements.
      */
-    private int index = 0;
+    private int size = 0;
 
     /**
      * This var is modified when we change the list.
@@ -28,6 +28,10 @@ public class SimpleArrayList<T> implements Iterable<T> {
      */
     public SimpleArrayList() {
         this.container = new Object[100];
+    }
+
+    public int getSize() {
+        return size;
     }
 
     /**
@@ -45,10 +49,10 @@ public class SimpleArrayList<T> implements Iterable<T> {
      * @param model - item to add.
      */
     public void add(T model) {
-        if (index >= container.length) {
+        if (size >= container.length) {
             container = Arrays.copyOf(container, container.length * 2);
         }
-        container[index++] = model;
+        container[size++] = model;
         modCount++;
     }
 
@@ -60,7 +64,7 @@ public class SimpleArrayList<T> implements Iterable<T> {
      * @throws IndexOutOfBoundsException
      */
     public T get(int index) {
-        Objects.checkIndex(index, this.index);
+        Objects.checkIndex(index, this.size);
         return (T) container[index];
     }
 
@@ -75,7 +79,7 @@ public class SimpleArrayList<T> implements Iterable<T> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return iterIndex < index;
+                return iterIndex < size;
             }
 
             @Override
