@@ -1,6 +1,5 @@
-package ru.job4j.kiss;
+package ru.job4j.design.tdd.kiss;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
