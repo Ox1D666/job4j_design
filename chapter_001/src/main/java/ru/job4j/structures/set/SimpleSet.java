@@ -5,7 +5,7 @@ import ru.job4j.structures.list.SimpleArrayList;
 import java.util.Iterator;
 
 public class SimpleSet<T> implements Iterable<T> {
-    SimpleArrayList<T> simpleArrayList = new SimpleArrayList<T>();
+    private SimpleArrayList<T> simpleArrayList = new SimpleArrayList<T>();
 
     public void add(T value) {
         if (!contains(value)) {
