@@ -24,28 +24,27 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     }
 
     public boolean insert(K key, V value) {
-        if (size >= table.length) {
-            table = Arrays.copyOf(table, table.length * 2);
-        }
-        boolean result = false;
+        resize();
         int index = getIndex(key);
         if (table[index] == null) {
             table[index] = new Node<>(key, value);
-            result = true;
             size++;
-        } else {
-            table[index].value = value;
+            return true;
+        }
+        return false;
+    }
+
+    private V get(K key) {
+        V result = null;
+        if (table[getIndex(key)] != null) {
+            result = table[getIndex(key)].value;
         }
         return result;
     }
 
-    private V get(K key) {
-        return table[getIndex(key)].value;
-    }
-
     private boolean delete(K key) {
         boolean result = false;
-        if (getIndex(key) >= 0) {
+        if (table[getIndex(key)] != null) {
             table[getIndex(key)] = null;
             result = true;
         }
@@ -59,6 +58,18 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     private int hash(K key) {
         int h = key.hashCode();
         return h ^ (h >>> 16);
+    }
+
+    private void resize() {
+        if (size >= table.length) {
+            Node<K, V>[] oldTable = table;
+            table = new Node[table.length * 2];
+            for (var node : oldTable) {
+                if (node != null) {
+                    insert(node.key, node.value);
+                }
+            }
+        }
     }
 
     @Override
