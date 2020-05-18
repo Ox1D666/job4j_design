@@ -1,7 +1,7 @@
-package ru.job4j.structures.generics.store;
+package ru.job4j.structures.generics;
 
 import org.junit.Test;
-import ru.job4j.structures.generics.store.SimpleArray;
+import ru.job4j.structures.generics.SimpleArray;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
