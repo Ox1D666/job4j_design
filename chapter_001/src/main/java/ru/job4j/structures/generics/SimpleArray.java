@@ -1,4 +1,4 @@
-package ru.job4j.structures.generics.store;
+package ru.job4j.structures.generics;
 
 import java.util.Iterator;
 import java.util.Objects;
