@@ -1,6 +1,5 @@
 package ru.job4j.structures.map;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,9 +31,11 @@ public class SimpleHashMapTest {
         SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
         map.insert(1, "Alex");
         map.insert(2, "Ann");
-        map.insert(3, "Bob");
-        assertThat(map.iterator().next(), is(1));
-        assertThat(map.iterator().next(), is(2));
-        assertThat(map.iterator().next(), is(3));
+        SimpleHashMap.Node<Integer, String> nodeOne = map.iterator().next();
+        assertThat(nodeOne.getKey(), is(1));
+        assertThat(map.iterator().hasNext(), is(true));
+        SimpleHashMap.Node<Integer, String> nodeTwo = map.iterator().next();
+        assertThat(nodeTwo.getKey(), is(2));
+        assertThat(map.iterator().hasNext(), is(false));
     }
 }

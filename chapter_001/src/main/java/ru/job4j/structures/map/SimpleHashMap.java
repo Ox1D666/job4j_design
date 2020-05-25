@@ -1,6 +1,5 @@
 package ru.job4j.structures.map;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -18,6 +17,10 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         private V value;
         private Node<K, V> next;
 
+        public K getKey() {
+            return key;
+        }
+
         public Node(K key, V value) {
             this.key = key;
             this.value = value;
@@ -26,31 +29,32 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
 
     public boolean insert(K key, V value) {
         resize();
-        int index = getIndex(key);
-        if (table[index] == null) {
-            table[index] = new Node<>(key, value);
+        if (table[getIndex(key)] == null) {
+            table[getIndex(key)] = new Node<>(key, value);
             size++;
             return true;
+        } else {
+            if (table[getIndex(key)].key.equals(key)) {
+                table[getIndex(key)].value = value;
+            }
         }
         return false;
     }
 
     public V get(K key) {
-        V result = null;
-        if (table[getIndex(key)] != null) {
-            result = table[getIndex(key)].value;
+        if (table[getIndex(key)] != null && table[getIndex(key)].key.equals(key)) {
+            return table[getIndex(key)].value;
         }
-        return result;
+        return null;
     }
 
     public boolean delete(K key) {
-        boolean result = false;
-        if (table[getIndex(key)] != null) {
+        if (table[getIndex(key)] != null && table[getIndex(key)].key.equals(key)) {
             table[getIndex(key)] = null;
-            result = true;
             size--;
+            return true;
         }
-        return result;
+        return false;
     }
 
     private int getIndex(K key) {
@@ -77,10 +81,17 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     @Override
     public Iterator<Node<K, V>> iterator() {
         return new Iterator<>() {
-            private int counter = 0;
+            private int cursor = 0;
             @Override
             public boolean hasNext() {
-                return counter < size;
+                int count = cursor;
+                while (count < size) {
+                    if (table[count] != null) {
+                        return true;
+                    }
+                    count++;
+                }
+                return false;
             }
 
             @Override
@@ -88,10 +99,19 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                while (table[counter] == null && counter < size) {
-                    counter++;
+                Node<K, V> result = null;
+                if (table[cursor] != null) {
+                    result = table[cursor++];
+                } else {
+                    while (cursor < size) {
+                        if (table[cursor] != null) {
+                            result = table[cursor++];
+                            break;
+                        }
+                        cursor++;
+                    }
                 }
-                return table[counter++];
+                return result;
             }
         };
     }
