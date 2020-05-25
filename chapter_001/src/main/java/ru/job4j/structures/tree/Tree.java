@@ -20,6 +20,13 @@ class Tree<E> implements SimpleTree<E> {
     }
 
     public boolean isBinary() {
+        int count = 0;
+        for (var el : root.children) {
+            count++;
+            if (count <= 2) {
+                return true;
+            }
+        }
         return false;
     }
 
