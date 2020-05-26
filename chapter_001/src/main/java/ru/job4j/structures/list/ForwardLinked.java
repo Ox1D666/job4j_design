@@ -2,7 +2,6 @@ package ru.job4j.structures.list;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 public class ForwardLinked<T> implements Iterable<T> {
     private Node<T> head;
@@ -29,6 +28,7 @@ public class ForwardLinked<T> implements Iterable<T> {
             tail = newNode;
             newNode.prev = old;
         }
+        size++;
     }
 
     public T get(int index) {
@@ -65,6 +65,19 @@ public class ForwardLinked<T> implements Iterable<T> {
             tail = tail.prev;
         }
         return result;
+    }
+
+    public void revert() {
+        Node<T> node = head; // поместили 1 в node
+        while (node != null) {
+            Node<T> tmp = node.next; // поместили 2 в tmp
+            node.next = node.prev; // в следующий после 1 поместили null
+            node.prev = tmp; // в предыдущий поместили 2
+            node = tmp; // взяли следующий элемент
+        }
+        node = tail; // сохраняем хвост
+        tail = head; // ссылаем голову на хвост
+        head = node; // ссылаем хвост на голову
     }
 
     @Override
