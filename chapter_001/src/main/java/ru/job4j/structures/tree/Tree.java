@@ -11,23 +11,29 @@ class Tree<E> implements SimpleTree<E> {
 
     @Override
     public boolean add(E parent, E child) {
-        boolean rsl = false;
         if (findBy(parent).isPresent() && findBy(child).isEmpty()) {
             root.children.add(new Node<>(child));
-            rsl = true;
+            return true;
         }
-        return rsl;
+        return false;
     }
 
     public boolean isBinary() {
-        int count = 0;
-        for (var el : root.children) {
-            count++;
-            if (count <= 2) {
-                return true;
+        return isBinary(root);
+    }
+
+    private boolean isBinary(Node<E> node) {
+        boolean result = false;
+        if (node.children.size() <= 2) {
+            result = true;
+            for (Node<E> child : node.children) {
+                if (!isBinary(child)) {
+                    result = false;
+                    break;
+                }
             }
         }
-        return false;
+        return result;
     }
 
     @Override
