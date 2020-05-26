@@ -1,11 +1,14 @@
 package ru.job4j.structures.map;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     private Node<K, V>[] table;
     private int size;
+    private int modCount;
+    static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     public SimpleHashMap() {
         this.table = new Node[16];
@@ -32,10 +35,12 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         if (table[getIndex(key)] == null) {
             table[getIndex(key)] = new Node<>(key, value);
             size++;
+            modCount++;
             return true;
         } else {
             if (table[getIndex(key)].key.equals(key)) {
                 table[getIndex(key)].value = value;
+                return true;
             }
         }
         return false;
@@ -52,6 +57,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
         if (table[getIndex(key)] != null && table[getIndex(key)].key.equals(key)) {
             table[getIndex(key)] = null;
             size--;
+            modCount++;
             return true;
         }
         return false;
@@ -67,7 +73,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     }
 
     private void resize() {
-        if (size >= table.length) {
+        if (size >= DEFAULT_LOAD_FACTOR * table.length) {
             Node<K, V>[] oldTable = table;
             table = new Node[table.length * 2];
             for (var node : oldTable) {
@@ -81,15 +87,18 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
     @Override
     public Iterator<Node<K, V>> iterator() {
         return new Iterator<>() {
+            private final int expectedModCount = modCount;
             private int cursor = 0;
             @Override
             public boolean hasNext() {
-                int count = cursor;
-                while (count < size) {
-                    if (table[count] != null) {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                for (int i = cursor; i < table.length; i++) {
+                    if (table[i] != null) {
+                        cursor = i;
                         return true;
                     }
-                    count++;
                 }
                 return false;
             }
@@ -99,19 +108,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node<K, V>> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                Node<K, V> result = null;
-                if (table[cursor] != null) {
-                    result = table[cursor++];
-                } else {
-                    while (cursor < size) {
-                        if (table[cursor] != null) {
-                            result = table[cursor++];
-                            break;
-                        }
-                        cursor++;
-                    }
-                }
-                return result;
+                return table[cursor++];
             }
         };
     }
