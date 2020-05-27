@@ -72,3 +72,4 @@ jrebel.lic
 build
 .gradle
 *.pid
+/chapter_001/src/main/java/ru/job4j/structures/examples/
