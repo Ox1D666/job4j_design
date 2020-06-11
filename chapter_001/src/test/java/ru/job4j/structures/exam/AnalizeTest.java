@@ -3,6 +3,7 @@ package ru.job4j.structures.exam;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -12,8 +13,8 @@ public class AnalizeTest {
     @Test
     public void whenDelete() {
         Analize analize = new Analize();
-        List<Analize.User> prev = new ArrayList<>();
-        List<Analize.User> cur = new ArrayList<>();
+        List<Analize.User> prev = new LinkedList<>();
+        List<Analize.User> cur = new LinkedList<>();
         prev.add(new Analize.User(1, "first"));
         prev.add(new Analize.User(2, "second"));
         prev.add(new Analize.User(3, "third"));
@@ -25,11 +26,11 @@ public class AnalizeTest {
     @Test
     public void whenAdd() {
         Analize analize = new Analize();
-        List<Analize.User> prev = new ArrayList<>();
+        List<Analize.User> prev = new LinkedList<>();
         prev.add(new Analize.User(1, "first"));
         prev.add(new Analize.User(2, "second"));
         prev.add(new Analize.User(3, "third"));
-        List<Analize.User> cur = new ArrayList<>(prev);
+        List<Analize.User> cur = new LinkedList<>(prev);
         cur.add(new Analize.User(4, "fourth"));
         int added = analize.diff(prev, cur).added;
         assertThat(added, is(1));
@@ -38,8 +39,8 @@ public class AnalizeTest {
     @Test
     public void whenAddThenChange() {
         Analize analize = new Analize();
-        List<Analize.User> prev = new ArrayList<>();
-        List<Analize.User> cur = new ArrayList<>();
+        List<Analize.User> prev = new LinkedList<>();
+        List<Analize.User> cur = new LinkedList<>();
         prev.add(new Analize.User(1, "first"));
         prev.add(new Analize.User(2, "second"));
         cur.add(new Analize.User(1, "first"));
