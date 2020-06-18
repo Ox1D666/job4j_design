@@ -6,7 +6,7 @@ public class ResultFile {
     public static void main(String[] args) {
         SimpleCalc simpleCalc = new SimpleCalc();
         try (FileOutputStream out = new FileOutputStream("result.txt")) {
-            out.write(simpleCalc.sum(2, 2));
+            out.write(simpleCalc.sum(2, 2).getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }
