@@ -20,9 +20,10 @@ public class Analizy {
                 if (serverDown == null && (status.startsWith("400") || status.startsWith("500"))) {
                     writer.write(status.split(" ")[1] + ";");
                     serverDown = status;
-                } else if (serverDown != null && (!status.startsWith("400") && !status.startsWith("500"))) {
+                } else if (serverDown != null && (!status.isEmpty() && !status.startsWith("400") && !status.startsWith("500"))) {
                     writer.write(status.split(" ")[1]);
                     serverDown = null;
+                    writer.println();
                 }
             }
         } catch (IOException e) {
@@ -32,6 +33,20 @@ public class Analizy {
 
     public static void main(String[] args) {
         Analizy analizy = new Analizy();
-        analizy.unavailable("./data/server.log", "./data/unavailable.csv");
+        File source = new File("./data/server.log");
+        try (PrintWriter writer = new PrintWriter(
+                new BufferedOutputStream(
+                        new FileOutputStream("./data/server.log")))) {
+            writer.write("200 10:56:01\n"
+                    + "200 10:57:01\n"
+                    + "400 10:58:01\n"
+                    + "200 10:59:01\n"
+                    + "500 11:01:02\n"
+                    + "200 11:02:02");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        File target = new File("./data/unavailable.csv");
+        analizy.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
     }
 }
