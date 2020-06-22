@@ -13,10 +13,8 @@ public class Search {
     }
 
     public static List<Path> search(Path root, String ext) throws IOException {
-        PrintFiles printFiles = new PrintFiles();
-        Files.walkFileTree(root, new PrintFiles());
-//        SearchFiles seacher = new SearchFiles(p -> p.toFile().getName.endsWith(ext));
-//        Files.walkFileTree(root, searcher);
-//        return searcher.getPaths();
+        PrintFiles printFiles = new PrintFiles(ext);
+        Files.walkFileTree(root, printFiles);
+        return printFiles.getPaths();
     }
 }
