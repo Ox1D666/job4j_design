@@ -21,11 +21,12 @@ public class AnalizyTest {
         try (PrintWriter writer = new PrintWriter(
                 new BufferedOutputStream(
                         new FileOutputStream(source)))) {
-            writer.write("200 10:56:01\n"
-                    + "200 10:57:01\n"
-                    + "400 10:58:01\n"
-                    + "200 10:59:01\n"
-                    + "500 11:01:02\n"
+            String lineSep = System.lineSeparator();
+            writer.write("200 10:56:01" + lineSep
+                    + "200 10:57:01" + lineSep
+                    + "400 10:58:01" + lineSep
+                    + "200 10:59:01" + lineSep
+                    + "500 11:01:02" + lineSep
                     + "200 11:02:02");
         } catch (IOException e) {
             e.printStackTrace();
@@ -33,8 +34,8 @@ public class AnalizyTest {
         analizy.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
         try (BufferedReader reader = new BufferedReader(new FileReader(target))) {
             while (reader.ready()) {
-                assertEquals(reader.readLine(), is("10:58:01;10:59:01"));
-                assertEquals(reader.readLine(), is("11:01:02;11:02:02"));
+                assertThat(reader.readLine(), is("10:58:01;10:59:01"));
+                assertThat(reader.readLine(), is("11:01:02;11:02:02"));
             }
         }
     }
