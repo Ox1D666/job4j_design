@@ -1,4 +1,7 @@
-package ru.job4j.io;
+package ru.job4j.io.search;
+
+import ru.job4j.io.search.ExtensionCondition;
+import ru.job4j.io.search.SearchCondition;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -11,15 +14,15 @@ import java.util.List;
 import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class PrintFiles implements FileVisitor<Path> {
-    private String ext;
+    private SearchCondition sc;
     private List<Path> paths = new ArrayList<>();
 
     public List<Path> getPaths() {
         return paths;
     }
 
-    public PrintFiles(String ext) {
-        this.ext = ext;
+    public PrintFiles(SearchCondition sc) {
+        this.sc = sc;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class PrintFiles implements FileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        if (file.getFileName().endsWith(ext)) {
+        if (sc.check(file)) {
             paths.add(file.getFileName());
         }
         System.out.println(file.toAbsolutePath());

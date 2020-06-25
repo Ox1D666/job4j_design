@@ -1,4 +1,7 @@
-package ru.job4j.io;
+package ru.job4j.io.search;
+
+import ru.job4j.io.search.ExtensionCondition;
+import ru.job4j.io.search.PrintFiles;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +16,7 @@ public class Search {
     }
 
     public static List<Path> search(Path root, String ext) throws IOException {
-        PrintFiles printFiles = new PrintFiles(ext);
+        PrintFiles printFiles = new PrintFiles(new ExtensionCondition(ext));
         Files.walkFileTree(root, printFiles);
         return printFiles.getPaths();
     }
