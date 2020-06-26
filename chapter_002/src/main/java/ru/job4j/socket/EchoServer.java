@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class EchoServer {
+    @SuppressWarnings("checkstyle:InnerAssignment")
     public static void main(String[] args) throws IOException {
         try (ServerSocket server = new ServerSocket(9000)) {
             boolean stopServer = false;
@@ -13,11 +14,10 @@ public class EchoServer {
                 try (OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
-                    String str = in.readLine();
-                    while (!str.isEmpty()) {
+                    String str;
+                    while (!(str = in.readLine()).isEmpty()) {
                         System.out.println(str);
                         if (str.contains("Bye")) {
-                            socket.close();
                             stopServer = true;
                         }
                     }
