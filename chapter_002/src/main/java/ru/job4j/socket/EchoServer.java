@@ -17,11 +17,15 @@ public class EchoServer {
                     String str;
                     while (!(str = in.readLine()).isEmpty()) {
                         System.out.println(str);
-                        if (str.contains("Bye")) {
+                        if (str.contains("Any")) {
+                            out.write("Don't understand u".getBytes());
+                        }
+                        if (str.contains("Exit")) {
                             stopServer = true;
                         }
                     }
-                    out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
+                    out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                    out.write("Hello, dear friend.".getBytes());
                 }
             }
         }
