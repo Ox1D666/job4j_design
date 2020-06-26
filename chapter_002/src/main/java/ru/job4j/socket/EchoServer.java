@@ -16,12 +16,10 @@ public class EchoServer {
                              new InputStreamReader(socket.getInputStream()))) {
                     String str;
                     while (!(str = in.readLine()).isEmpty()) {
-                        System.out.println(str);
-                        if (str.contains("Any")) {
-                            out.write("Don't understand u".getBytes());
-                        }
                         if (str.contains("Exit")) {
                             stopServer = true;
+                        } else {
+                            out.write(str.getBytes());
                         }
                     }
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
