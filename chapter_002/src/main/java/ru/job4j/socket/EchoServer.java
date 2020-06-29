@@ -16,6 +16,7 @@ public class EchoServer {
                              new InputStreamReader(socket.getInputStream()))) {
                     String str;
                     while (!(str = in.readLine()).isEmpty()) {
+                        System.out.println(str);
                         if (str.contains("Exit")) {
                             stopServer = true;
                         } else {
