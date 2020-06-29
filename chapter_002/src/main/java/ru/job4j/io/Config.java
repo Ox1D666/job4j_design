@@ -14,12 +14,8 @@ public class Config {
 
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            List<String> linesOfFile = new ArrayList<>();
-            read.lines().forEach(linesOfFile::add);
-            for (var line : linesOfFile) {
-                String[] keyAndValue = line.split("=");
-                values.put(keyAndValue[0], keyAndValue[1]);
-            }
+            read.lines().filter(line -> !line.contains("#")).filter(line -> line.length() != 0).
+                    forEach(line -> values.put(line.split("=")[0], line.split("=")[1]));
         } catch (Exception e) {
             e.printStackTrace();
         }
