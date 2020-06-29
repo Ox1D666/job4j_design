@@ -2,9 +2,7 @@ package ru.job4j.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class Config {
     private final String path;
@@ -15,10 +13,20 @@ public class Config {
     }
 
     public void load() {
+        try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
+            List<String> linesOfFile = new ArrayList<>();
+            read.lines().forEach(linesOfFile::add);
+            for (var line : linesOfFile) {
+                String[] keyAndValue = line.split("=");
+                values.put(keyAndValue[0], keyAndValue[1]);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String value(String key) {
-        throw new UnsupportedOperationException("Don't impl this method yet!");
+        return values.get(key);
     }
 
     @Override
