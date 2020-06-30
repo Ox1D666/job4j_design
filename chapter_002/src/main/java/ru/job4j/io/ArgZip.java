@@ -13,14 +13,14 @@ public class ArgZip {
     }
 
     public String directory() {
-        return null;
+        return args[1];
     }
 
     public String exclude() {
-        return null;
+        return args[3];
     }
 
     public String output() {
-        return null;
+        return args[5];
     }
 }
