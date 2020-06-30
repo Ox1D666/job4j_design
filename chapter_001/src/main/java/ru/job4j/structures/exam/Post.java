@@ -24,17 +24,17 @@ public class Post {
     public List<User> parse(List<User> usersList) {
         List<User> users = usersList;
         Set<String> mailsBaseUser = usersList.get(0).getMail();
-        for (int j = 1; j < users.size(); j++) {
-            Set<String> mailsNextUser = usersList.get(j).getMail();
-            for (var baseMail : mailsBaseUser) {
-                for (var nextMail : mailsNextUser) {
-                    if (nextMail.equals(baseMail)) {
-                        //тут надо кинуть в users уникального юзера, дубликаты удалить,
-                        // и запустить поиск дубликатов со следующего уникального юзера
-                    }
-                }
-            }
-        }
+//        for (int j = 1; j < users.size(); j++) {
+//            Set<String> mailsNextUser = usersList.get(j).getMail();
+//            for (var baseMail : mailsBaseUser) {
+//                for (var nextMail : mailsNextUser) {
+//                    if (nextMail.equals(baseMail)) {
+//                        //тут надо кинуть в users уникального юзера, дубликаты удалить,
+//                        // и запустить поиск дубликатов со следующего уникального юзера
+//                    }
+//                }
+//            }
+//        }
         return users;
     }
 
