@@ -17,12 +17,16 @@ public class EchoServer {
                     do {
                         str = in.readLine();
                         System.out.println(str);
-                        if (str.contains("Bye")) {
+                        if (str.contains("Exit")) {
                             stopServer = true;
+                        } else if (str.contains("Hello")) {
+                            System.out.println("Hello, dear friend.");
+                        } else {
+                            System.out.println(str);
                         }
                     }
                     while (!str.isEmpty());
-                    out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
+                    out.write("HTTP/1.1 200 OK\r\r\r\n\\".getBytes());
                 }
             }
         }
