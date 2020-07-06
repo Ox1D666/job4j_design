@@ -22,17 +22,15 @@ public class EchoServer {
                              new InputStreamReader(socket.getInputStream()))) {
                     String str = in.readLine();
                     if (str != null) {
-                        String msg = str.substring(str.lastIndexOf("=") + 1, str.lastIndexOf(' '));
-                        if (msg.equals(HELLO)) {
-                            System.out.println("Hello, dear friend");
-                        } else if (msg.equals(EXIT)) {
+                        String argument = str.substring(str.lastIndexOf('=') + 1, str.lastIndexOf(' '));
+                        String answer = HELLO.equals(argument) ? "Hello" : argument;
+                        if (EXIT.equalsIgnoreCase(answer)) {
                             server.close();
                             stopServer = true;
-                        } else {
-                            System.out.println(str);
                         }
+                        out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                        out.write(answer.getBytes());
                     }
-                    out.write("HTTP/1.1 200 OK\r\r\r\n\\".getBytes());
                 } catch (IOException e) {
                     LOG.error("I don't know what exception must be hear, beside fileNotFound", e);
                 }
