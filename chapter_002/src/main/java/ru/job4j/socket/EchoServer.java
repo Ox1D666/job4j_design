@@ -3,11 +3,11 @@ package ru.job4j.socket;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EchoServer {
-
     private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
 
     public static void main(String[] args) throws IOException {
@@ -29,8 +29,7 @@ public class EchoServer {
                         } else {
                             System.out.println(str);
                         }
-                    }
-                    while (!str.isEmpty());
+                    } while (!str.isEmpty());
                     out.write("HTTP/1.1 200 OK\r\r\r\n\\".getBytes());
                 } catch (IOException e) {
                     LOG.error("I don't know what exception must be hear, beside fileNotFound", e);
