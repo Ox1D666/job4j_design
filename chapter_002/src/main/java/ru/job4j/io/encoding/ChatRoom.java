@@ -9,26 +9,31 @@ public class ChatRoom {
     private Input input;
     private final String path;
     private static int work = 0;
+    private final static String EXIT = "exit";
+    private final static String GO = "go";
+    private final static String STOP = "stop";
+    private List<String> words;
 
     public ChatRoom(Input input, String path) {
         this.input = input;
         this.path = path;
     }
 
-    public void init() throws IOException {
+    public void init(File path) throws IOException {
+        getWords();
         try (PrintWriter out = new PrintWriter(new BufferedOutputStream(
-                        new FileOutputStream("./chapter_002/data/chatLog.txt")))) {
+                        new FileOutputStream(path)))) {
             while (work != -1) {
                 String str = input.ask();
                 out.write(str);
                 out.println();
-                if (str.equals("exit")) {
+                if (str.equals(EXIT)) {
                     out.close();
                     work = -1;
-                } else if (!str.equals("stop")) {
+                } else if (!str.equals(STOP)) {
                     System.out.println(writeSomeWord());
                 } else {
-                    while (!str.equals("go")) {
+                    while (!str.equals(GO)) {
                         str = input.ask();
                         out.write(str);
                         out.println();
@@ -40,15 +45,15 @@ public class ChatRoom {
         }
     }
 
-    public String writeSomeWord() throws IOException {
-        String result = "";
+    private void getWords() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(this.path))) {
-            List<String> words = reader.lines().collect(Collectors.toList());
-            Random rand = new Random();
-            result = words.get(rand.nextInt(words.size()));
+            this.words = reader.lines().collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result;
+    }
+
+    private String writeSomeWord() {
+        return this.words.get(new Random().nextInt(words.size()));
     }
 }

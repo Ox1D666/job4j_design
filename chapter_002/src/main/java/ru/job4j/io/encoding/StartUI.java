@@ -1,5 +1,6 @@
 package ru.job4j.io.encoding;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -9,7 +10,7 @@ import java.io.IOException;
 public class StartUI {
     public static void main(String[] args) throws IOException {
         Input input = new Input();
-        ChatRoom chat = new ChatRoom(input, args[0]);
-        chat.init();
+        ChatRoom chat = new ChatRoom(input, args[1]);
+        chat.init(new File(args[3]));
     }
 }
