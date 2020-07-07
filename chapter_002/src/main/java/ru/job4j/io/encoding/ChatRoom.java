@@ -31,7 +31,10 @@ public class ChatRoom {
                     out.close();
                     work = -1;
                 } else if (!str.equals(STOP)) {
-                    System.out.println(writeSomeWord());
+                    String answer = writeSomeWord();
+                    System.out.println(answer);
+                    out.write(" " + answer);
+                    out.println();
                 } else {
                     while (!str.equals(GO)) {
                         str = input.ask();
