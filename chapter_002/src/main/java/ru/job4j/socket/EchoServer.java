@@ -28,8 +28,10 @@ public class EchoServer {
                             server.close();
                             stopServer = true;
                         }
-                        out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                        out.write(answer.getBytes());
+                        if (!server.isClosed()) {
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write(answer.getBytes());
+                        }
                     }
                 } catch (IOException e) {
                     LOG.error("I don't know what exception must be hear, beside fileNotFound", e);
