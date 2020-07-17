@@ -1,43 +1,43 @@
-/*CREATE TABLE Users (
-    UserID serial primary key,
-    login text,
-    passord text	
+create table Roles (
+	Role text primary key
 );
 
-create table Roles (
-	RoleDesc varchar(50)
+CREATE TABLE Users (
+    UserID serial primary key,
+    login text,
+    passord text,
+	RoleID text references Roles(Role)
 );
 
 create table Rules (
-	RoleDescription text
-);
-
-create table Comments (
-	Description text
-);
-
-create table Attachs (
-	Files text
+	RuleID text primary key
 );
 
 create table Сategories (
-	Category text
+	Сategory text primary key
 );
 
 create table States (
-	State text
+	State text primary key
 );
-*/
-/*create table Item (
+
+create table Items (
 	ItemID serial primary key,
-	ItemDescription text references Comments(Description),
-	ItemAttachs text references Attachs(Files),
-	ItemCategory text references Сategories(Category),
-	ItemState text references States(State)
-);*/
-/*alter table Сategories
-add primary key (Category);*/ 
--- repeat for Comments, Attachs, States & Rules
+	UserID int references Users(UserID),
+	State text references States(State),
+	Category text references Сategories(Сategory)
+);
+
+create table Comments (
+	Comment text, 
+	ItemID int references Items(ItemID)
+);
+
+create table Attachs (
+	File text, 
+	ItemID int references Items(ItemID)
+);
+
 
 
 

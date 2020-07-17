@@ -1,0 +1,25 @@
+--create table users (
+--	id serial primary key,
+--	login character varying(2000),
+--	password character varying(2000),
+--	create_date timestamp
+--);
+--insert into users(login, password, create_date) values ('Romanov', 'password', '1999-01-06 04:05:06');
+--select * from users;
+--update users set password='12345' where id=3;
+--delete from users where id=2;
+
+--create table items (
+--	id serial primary key,
+--	description text
+--);
+
+--select * from items;
+  
+--create table comments(
+--	id serial primary key,
+--	description text,
+--	item_id integer references items(id)
+--);
+--select * from comments;
+--alter table items add column create_date timestamp not null default now();
