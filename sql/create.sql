@@ -1,42 +1,63 @@
-create table Roles (
-	Role text primary key
+CREATE TABLE IF NOT EXISTS  Roles (
+	id SERIAL PRIMARY KEY,
+	role text 
 );
 
-CREATE TABLE Users (
-    UserID serial primary key,
+CREATE TABLE IF NOT EXISTS Users (
+    id SERIAL PRIMARY KEY,
     login text,
-    passord text,
-	RoleID text references Roles(Role)
+    password text,
+	RoleID int references Roles(id)
 );
 
-create table Rules (
-	RuleID text primary key
+CREATE TABLE IF NOT EXISTS Rules (
+	id SERIAL PRIMARY KEY,
+	rule text
 );
 
-create table Сategories (
-	Сategory text primary key
+CREATE TABLE IF NOT EXISTS Role_Rule (
+    id SERIAL PRIMARY KEY,
+    RoleID INT REFERENCES Roles(id),
+    RuleID INT REFERENCES Rules(id)
 );
 
-create table States (
-	State text primary key
+CREATE TABLE IF NOT EXISTS Сategories (
+	id SERIAL PRIMARY KEY,
+	Сategory text
 );
 
-create table Items (
-	ItemID serial primary key,
-	UserID int references Users(UserID),
-	State text references States(State),
-	Category text references Сategories(Сategory)
+CREATE TABLE IF NOT EXISTS States (
+	id SERIAL PRIMARY KEY,
+	state text 
 );
 
-create table Comments (
+CREATE TABLE IF NOT EXISTS Items (
+	id serial primary key,
+	name text,
+	UserID int references Users(id),
+	State int references States(id),
+	Category int references Сategories(id)
+);
+
+CREATE TABLE IF NOT EXISTS Comments (
+	id SERIAL PRIMARY KEY,
 	Comment text, 
-	ItemID int references Items(ItemID)
+	ItemID int references Items(id)
 );
 
-create table Attachs (
+CREATE TABLE IF NOT EXISTS Attachments (
+	id SERIAL PRIMARY KEY,
 	File text, 
-	ItemID int references Items(ItemID)
+	ItemID int references Items(id)
 );
+
+INSERT INTO Roles(id, role) values(1, 'administraror'),
+(2, 'initiator'),
+(3, 'executor');
+INSERT INTO Users(id, login, password, RoleID) values(1, 'admin', 'admin', 1),
+(2, 'manager', 'qwerty', 2),
+(3, 'worker', '123', 3);
+
 
 
 
