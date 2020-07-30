@@ -60,10 +60,11 @@ public class ImportDB {
 
     public static void main(String[] args) throws Exception {
         Properties cfg = new Properties();
-        try (FileInputStream in = new FileInputStream("./app.properties")) {
+        try (FileInputStream in = new FileInputStream("C:\\projects\\job4j_design"
+                + "\\chapter_003\\src\\main\\resources\\app.properties")) {
             cfg.load(in);
         }
-        ImportDB db = new ImportDB(cfg, "./dump.txt");
+        ImportDB db = new ImportDB(cfg, "C:\\projects\\job4j_design\\chapter_003\\data\\dump.txt");
         db.save(db.load());
     }
 }
