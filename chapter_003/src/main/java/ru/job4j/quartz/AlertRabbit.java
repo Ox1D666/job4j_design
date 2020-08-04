@@ -4,52 +4,60 @@ import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
-    public static void main(String[] args) {
+    private Properties cfg;
+
+    public static void main(String[] args) throws Exception {
+        AlertRabbit ar = new AlertRabbit();
         try {
-            List<Long> store = new ArrayList<>();
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
-            JobDataMap data = new JobDataMap();
-            data.put("store", store);
-            JobDetail job = newJob(Rabbit.class)
-                    .usingJobData(data)
-                    .build();
+            JobDetail job = newJob(Rabbit.class).build();
             SimpleScheduleBuilder times = simpleSchedule()
-                    .withIntervalInSeconds(1)
+                    .withIntervalInSeconds(ar.getTimeToRepeat())
                     .repeatForever();
             Trigger trigger = newTrigger()
                     .startNow()
                     .withSchedule(times)
                     .build();
             scheduler.scheduleJob(job, trigger);
-            Thread.sleep(5000);
-            scheduler.shutdown();
-            System.out.println(store);
-        } catch (Exception se) {
+        } catch (SchedulerException se) {
             se.printStackTrace();
         }
     }
 
-    public static class Rabbit implements Job {
-
-        public Rabbit() {
-            System.out.println(hashCode());
+    private int getTimeToRepeat() throws Exception {
+        int result = 0;
+        try (InputStream in = AlertRabbit.class.getClassLoader().getResourceAsStream("rabbit.properties")) {
+            StringBuilder text = new StringBuilder();
+            int read;
+            while ((read = in.read()) != -1) {
+                text.append((char) read);
+            }
+            System.out.println(text);
+            String[] lines = text.toString().split("=");
+            result = Integer.parseInt(lines[1]);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return result;
+    }
 
+    public static class Rabbit implements Job {
         @Override
         public void execute(JobExecutionContext context) throws JobExecutionException {
             System.out.println("Rabbit runs here ...");
-            List<Long> store = (List<Long>) context.getJobDetail().getJobDataMap().get("store");
-            store.add(System.currentTimeMillis());
         }
     }
 }
