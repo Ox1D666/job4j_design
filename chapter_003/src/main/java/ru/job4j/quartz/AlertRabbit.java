@@ -16,8 +16,6 @@ import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
-    private Properties cfg;
-
     public static void main(String[] args) throws Exception {
         AlertRabbit ar = new AlertRabbit();
         try {
@@ -40,14 +38,9 @@ public class AlertRabbit {
     private int getTimeToRepeat() throws Exception {
         int result = 0;
         try (InputStream in = AlertRabbit.class.getClassLoader().getResourceAsStream("rabbit.properties")) {
-            StringBuilder text = new StringBuilder();
-            int read;
-            while ((read = in.read()) != -1) {
-                text.append((char) read);
-            }
-            System.out.println(text);
-            String[] lines = text.toString().split("=");
-            result = Integer.parseInt(lines[1]);
+            Properties config = new Properties();
+            config.load(in);
+            result = Integer.parseInt(config.getProperty("rabbit.interval"));
         } catch (Exception e) {
             e.printStackTrace();
         }
