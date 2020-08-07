@@ -44,9 +44,9 @@ public class AlertRabbit {
             ps.load(in);
             Class.forName(ps.getProperty("driver-class-name"));
             cn = DriverManager.getConnection(
-                    ps.getProperty("url"),
-                    ps.getProperty("username"),
-                    ps.getProperty("password")
+                    ps.getProperty("jdbc.url"),
+                    ps.getProperty("jdbc.username"),
+                    ps.getProperty("jdbc.password")
             );
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +55,6 @@ public class AlertRabbit {
     }
 
     public static class Rabbit implements Job {
-
         public Rabbit() {
             System.out.println(hashCode());
         }
@@ -65,7 +64,7 @@ public class AlertRabbit {
             Connection connection = (Connection) context.getJobDetail().getJobDataMap().get("connection");
             try (PreparedStatement ps = connection.prepareStatement("insert into rabbit(name) values(?)")) {
                     ps.setString(1, String.valueOf(System.currentTimeMillis()));
-                    ps.execute();
+                    ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
             }
