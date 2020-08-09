@@ -42,7 +42,7 @@ public class AlertRabbit {
         try (InputStream in = AlertRabbit.class.getClassLoader().getResourceAsStream("rabbit.properties")) {
             Properties ps = new Properties();
             ps.load(in);
-            Class.forName(ps.getProperty("driver-class-name"));
+            Class.forName(ps.getProperty("jdbc.driver"));
             cn = DriverManager.getConnection(
                     ps.getProperty("jdbc.url"),
                     ps.getProperty("jdbc.username"),
