@@ -10,19 +10,25 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class SqlRuParse {
+    private Locale language = new Locale("ru");
+    private SimpleDateFormat dateFormatAll = new SimpleDateFormat("dd MMM yy, HH:mm", language);
+    private SimpleDateFormat todayAndYesterday = new SimpleDateFormat("dd MMM yy", language);
+
     public static void main(String[] args) throws Exception {
         SqlRuParse sqlRuParse = new SqlRuParse();
-        Locale language = new Locale("ru");
-        DateFormatSymbols instance = sqlRuParse.setNewNameForRuMonth(language);
-        sqlRuParse.init(language, instance);
+        sqlRuParse.parse();
     }
 
-    private void init(Locale language, DateFormatSymbols instance) throws Exception {
-        Calendar date = Calendar.getInstance();
-        SimpleDateFormat dateFormatAll = new SimpleDateFormat("dd MMM yy, HH:mm", language);
-        SimpleDateFormat todayAndYesterday = new SimpleDateFormat("dd MMM yy", language);
+    public SqlRuParse() {
+        DateFormatSymbols instance = DateFormatSymbols.getInstance(language);
+        instance.setShortMonths(new String[]{"янв", "февр", "мар", "апр", "май", "июн", "июл",
+                "авг", "сент", "окт", "нояб", "дек"});
         dateFormatAll.setDateFormatSymbols(instance);
         todayAndYesterday.setDateFormatSymbols(instance);
+    }
+
+    private void parse() throws Exception {
+        Calendar date = Calendar.getInstance();
         for (int page = 1; page <= 5; page++) {
             Document doc = Jsoup.connect("https://www.sql.ru/forum/job-offers/" + page).get();
             Elements row = doc.selectFirst(".forumTable").select(".postslisttopic");
@@ -31,7 +37,7 @@ public class SqlRuParse {
     }
 
     private void printPage(Calendar date, Elements row, SimpleDateFormat dateFormatAll,
-                      SimpleDateFormat todayAndYesterday)
+                           SimpleDateFormat todayAndYesterday)
             throws Exception {
         for (Element td : row) {
             Element href = td.child(0);
@@ -49,12 +55,5 @@ public class SqlRuParse {
                 System.out.println(dateFormatAll.format(dateFormatAll.parse(dateText)));
             }
         }
-    }
-
-    private DateFormatSymbols setNewNameForRuMonth(Locale language) {
-        DateFormatSymbols instance = DateFormatSymbols.getInstance(language);
-        instance.setShortMonths(new String[]{"янв", "февр", "мар", "апр", "май", "июн", "июл",
-                "авг", "сент", "окт", "нояб", "дек"});
-        return instance;
     }
 }
