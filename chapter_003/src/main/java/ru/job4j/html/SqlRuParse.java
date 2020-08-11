@@ -4,7 +4,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,36 +11,50 @@ import java.util.Locale;
 
 public class SqlRuParse {
     public static void main(String[] args) throws Exception {
-        String[] url = "https://www.sql.ru/forum/job-offers/1".split("");
-        int page = Integer.parseInt(url[url.length - 1]);
-        for (; page <= 5; page++) {
+        SqlRuParse sqlRuParse = new SqlRuParse();
+        Locale language = new Locale("ru");
+        DateFormatSymbols instance = sqlRuParse.setNewNameForRuMonth(language);
+        sqlRuParse.init(language, instance);
+    }
+
+    private void init(Locale language, DateFormatSymbols instance) throws Exception {
+        Calendar date = Calendar.getInstance();
+        SimpleDateFormat dateFormatAll = new SimpleDateFormat("dd MMM yy, HH:mm", language);
+        SimpleDateFormat todayAndYesterday = new SimpleDateFormat("dd MMM yy", language);
+        dateFormatAll.setDateFormatSymbols(instance);
+        todayAndYesterday.setDateFormatSymbols(instance);
+        for (int page = 1; page <= 5; page++) {
             Document doc = Jsoup.connect("https://www.sql.ru/forum/job-offers/" + page).get();
-            System.out.println(page + "---------------------------------------------------------------------------------------------------------------------------");
-            Locale ru = new Locale("ru");
-            DateFormatSymbols instance = DateFormatSymbols.getInstance(ru);
-            instance.setShortMonths(new String[]{"янв", "февр", "мар", "апр", "мая", "июн", "июл", "авг", "сент", "окт", "нояб", "дек"});
-            SimpleDateFormat dateFormatALL = new SimpleDateFormat("dd MMM yy, HH:mm", ru);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yy", ru);
-            dateFormatALL.setDateFormatSymbols(instance);
-            dateFormat.setDateFormatSymbols(instance);
-            Calendar cal = Calendar.getInstance();
             Elements row = doc.selectFirst(".forumTable").select(".postslisttopic");
-            for (Element td : row) {
-                Element href = td.child(0);
-                System.out.println(href.attr("href"));
-                System.out.println(href.text());
-                String date = td.lastElementSibling().text();
-                if (date.contains("сегодня")) {
-                    String time = date.split(" ")[1];
-                    System.out.println(dateFormat.format(cal.getTime()) + ", " + time);
-                } else if (date.contains("вчера")) {
-                    String time = date.split(" ")[1];
-                    cal.add(Calendar.DATE, -1);
-                    System.out.println(dateFormat.format(cal.getTime()) + ", " + time);
-                } else {
-                    System.out.println(dateFormatALL.format(dateFormatALL.parse(td.lastElementSibling().text())));
-                }
+            printPage(date, row, dateFormatAll, todayAndYesterday);
+        }
+    }
+
+    private void printPage(Calendar date, Elements row, SimpleDateFormat dateFormatAll,
+                      SimpleDateFormat todayAndYesterday)
+            throws Exception {
+        for (Element td : row) {
+            Element href = td.child(0);
+            System.out.println(href.attr("href"));
+            System.out.println(href.text());
+            String dateText = td.lastElementSibling().text();
+            if (dateText.contains("сегодня")) {
+                String time = dateText.split(" ")[1];
+                System.out.println(todayAndYesterday.format(date.getTime()) + ", " + time);
+            } else if (dateText.contains("вчера")) {
+                String time = dateText.split(" ")[1];
+                date.add(Calendar.DATE, -1);
+                System.out.println(todayAndYesterday.format(date.getTime()) + ", " + time);
+            } else {
+                System.out.println(dateFormatAll.format(dateFormatAll.parse(dateText)));
             }
         }
+    }
+
+    private DateFormatSymbols setNewNameForRuMonth(Locale language) {
+        DateFormatSymbols instance = DateFormatSymbols.getInstance(language);
+        instance.setShortMonths(new String[]{"янв", "февр", "мар", "апр", "май", "июн", "июл",
+                "авг", "сент", "окт", "нояб", "дек"});
+        return instance;
     }
 }
