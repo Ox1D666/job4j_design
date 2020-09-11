@@ -1,6 +1,6 @@
 package ru.job4j.srp.deps;
 
-import ru.job4j.srp.store.Employer;
+import ru.job4j.srp.store.Employee;
 import ru.job4j.srp.store.Store;
 
 import java.util.Collections;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class HRDepartment implements Department {
     @Override
-    public List<String> makeReport(Predicate<Employer> filter, Store store) {
+    public List<String> makeReport(Predicate<Employee> filter, Store store) {
         return store.findBy(filter).stream()
                 .sorted(Collections.reverseOrder())
                 .map(el -> el.getName() + ";" + el.getSalary() + ";")

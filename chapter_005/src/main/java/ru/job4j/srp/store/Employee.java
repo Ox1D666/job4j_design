@@ -3,13 +3,13 @@ package ru.job4j.srp.store;
 import java.util.Calendar;
 import java.util.Objects;
 
-public class Employer implements Comparable<Employer> {
+public class Employee implements Comparable<Employee> {
     private String name;
     private Calendar hired;
     private Calendar fired;
     private double salary;
 
-    public Employer(String name, Calendar hired, Calendar fired, double salary) {
+    public Employee(String name, Calendar hired, Calendar fired, double salary) {
         this.name = name;
         this.hired = hired;
         this.fired = fired;
@@ -56,8 +56,8 @@ public class Employer implements Comparable<Employer> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Employer employer = (Employer) o;
-        return Objects.equals(name, employer.name);
+        Employee employee = (Employee) o;
+        return Objects.equals(name, employee.name);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class Employer implements Comparable<Employer> {
     }
 
     @Override
-    public int compareTo(Employer o) {
+    public int compareTo(Employee o) {
         return Double.compare(salary, o.salary);
     }
 }

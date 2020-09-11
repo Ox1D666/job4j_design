@@ -1,6 +1,6 @@
 package ru.job4j.srp.reports;
 
-import ru.job4j.srp.store.Employer;
+import ru.job4j.srp.store.Employee;
 import ru.job4j.srp.store.Store;
 import ru.job4j.srp.deps.Department;
 
@@ -24,7 +24,7 @@ public class ReportEngine {
 //        }
 //        return text.toString();
 //    }
-    public String generate(Predicate<Employer> filter, Report report, Department department) {
+    public String generate(Predicate<Employee> filter, Report report, Department department) {
         return report.generateReport(department.makeReport(filter, store));
     }
 }
