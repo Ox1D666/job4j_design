@@ -8,36 +8,32 @@ import java.util.List;
  */
 public class MaxMin {
     /**
-     * Calculate max of two elements.
      * @param value List.
      * @param comparator Comparator.
      * @param <T>.
      * @return maximum value.
      */
     public <T> T max(List<T> value, Comparator<T> comparator) {
-        T max = value.get(0);
-        for (var el: value) {
-            if (comparator.compare(el, max) > 0) {
-                max = el;
-            }
-        }
-        return max;
+        return compare(value, comparator);
     }
 
     /**
-     * Calculate min of two elements.
      * @param value List.
      * @param comparator Comparator.
      * @param <T>.
      * @return minimum value.
      */
     public <T> T min(List<T> value, Comparator<T> comparator) {
-        T min = value.get(0);
+        return compare(value, comparator.reversed());
+    }
+
+    private <T> T compare(List<T> value, Comparator<T> comparator) {
+        T element = value.get(0);
         for (var el: value) {
-            if (comparator.compare(el, min) < 0) {
-                min = el;
+            if (comparator.compare(el, element) > 0) {
+                element = el;
             }
         }
-        return min;
+        return element;
     }
 }
