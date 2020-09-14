@@ -8,6 +8,9 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * Report for HR dep.
+ */
 public class HRReport implements Report {
     /**
      * Store with employee.
