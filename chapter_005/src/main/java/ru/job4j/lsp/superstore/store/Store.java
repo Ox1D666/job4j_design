@@ -1,6 +1,6 @@
-package ru.job4j.lsp.store;
+package ru.job4j.lsp.superstore.store;
 
-import ru.job4j.lsp.products.Food;
+import ru.job4j.lsp.superstore.products.Food;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.job4j.lsp.products;
+package ru.job4j.lsp.superstore.products;
 
 import java.time.LocalDate;
 

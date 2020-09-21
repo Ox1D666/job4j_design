@@ -1,7 +1,6 @@
-package ru.job4j.lsp.products;
+package ru.job4j.lsp.superstore.products;
 
 import org.junit.Test;
-import ru.job4j.lsp.ControlQuality;
 
 import java.time.LocalDate;
 import java.time.Month;

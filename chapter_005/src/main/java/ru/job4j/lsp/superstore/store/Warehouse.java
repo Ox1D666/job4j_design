@@ -1,13 +1,13 @@
-package ru.job4j.lsp.store;
+package ru.job4j.lsp.superstore.store;
 
-import ru.job4j.lsp.products.Food;
-import ru.job4j.lsp.products.ShelfLIfe;
+import ru.job4j.lsp.superstore.products.Food;
+import ru.job4j.lsp.superstore.products.ShelfLIfe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Shop implements Store {
-    private  List<Food> products = new ArrayList<>();
+public class Warehouse implements Store {
+    private List<Food> products = new ArrayList<>();
     private final ShelfLIfe shelfLIfe = new ShelfLIfe();
 
     @Override
@@ -17,10 +17,7 @@ public class Shop implements Store {
 
     @Override
     public boolean accept(Food food) {
-        if (shelfLIfe.checkDateExpiration(food) > 25 && shelfLIfe.checkDateExpiration(food) != 100) {
-            if (shelfLIfe.checkDateExpiration(food) > 75) {
-                food.setDiscount(30);
-            }
+        if (shelfLIfe.checkDateExpiration(food) < 25) {
             add(food);
             return true;
         }

@@ -1,13 +1,8 @@
-package ru.job4j.lsp;
+package ru.job4j.lsp.superstore;
 
-import ru.job4j.lsp.products.Food;
-import ru.job4j.lsp.store.Shop;
-import ru.job4j.lsp.store.Store;
-import ru.job4j.lsp.store.Trash;
-import ru.job4j.lsp.store.Warehouse;
+import ru.job4j.lsp.superstore.products.Food;
+import ru.job4j.lsp.superstore.store.Store;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

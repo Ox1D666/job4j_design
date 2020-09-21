@@ -1,12 +1,13 @@
 package ru.job4j.lsp;
 
 import org.junit.Test;
-import ru.job4j.lsp.products.Apple;
-import ru.job4j.lsp.products.Food;
-import ru.job4j.lsp.store.Shop;
-import ru.job4j.lsp.store.Store;
-import ru.job4j.lsp.store.Trash;
-import ru.job4j.lsp.store.Warehouse;
+import ru.job4j.lsp.superstore.products.Apple;
+import ru.job4j.lsp.superstore.products.Food;
+import ru.job4j.lsp.superstore.store.Shop;
+import ru.job4j.lsp.superstore.store.Store;
+import ru.job4j.lsp.superstore.store.Trash;
+import ru.job4j.lsp.superstore.store.Warehouse;
+import ru.job4j.lsp.superstore.ControlQuality;
 
 import java.time.*;
 import java.util.Arrays;
