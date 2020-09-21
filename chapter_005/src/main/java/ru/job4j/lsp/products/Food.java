@@ -1,6 +1,7 @@
 package ru.job4j.lsp.products;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 /**
  * Abstract model of product which we want to sell.
@@ -8,16 +9,15 @@ import java.time.Instant;
 public abstract class Food {
     private String name;
     private int price;
-    private Instant createDate;
-    private Instant expireDate;
+    private LocalDate createDate;
+    private LocalDate expireDate;
     private int discount;
 
-    public Food(String name, int price, Instant createDate, Instant expireDate, int discount) {
+    public Food(String name, int price, LocalDate createDate, LocalDate expireDate) {
         this.name = name;
         this.price = price;
         this.createDate = createDate;
         this.expireDate = expireDate;
-        this.discount = discount;
     }
 
     public String getName() {
@@ -36,19 +36,19 @@ public abstract class Food {
         this.price = price;
     }
 
-    public Instant getCreateDate() {
+    public LocalDate getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Instant createDate) {
+    public void setCreateDate(LocalDate createDate) {
         this.createDate = createDate;
     }
 
-    public Instant getExpireDate() {
+    public LocalDate getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(Instant expireDate) {
+    public void setExpireDate(LocalDate expireDate) {
         this.expireDate = expireDate;
     }
 
