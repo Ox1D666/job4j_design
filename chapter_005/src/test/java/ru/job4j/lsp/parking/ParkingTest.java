@@ -15,7 +15,7 @@ public class ParkingTest {
     @Test
     public void whenParkCar() {
         Parking parking = new Parking(5, 5);
-        Auto audi = new Car("audi");
+        Auto audi = new Car("a111aa777");
         List<Auto> autos = Arrays.asList(audi);
         parking.load(autos);
         assertThat(parking.delete(autos).get(0), is(audi));
@@ -24,7 +24,7 @@ public class ParkingTest {
     @Test
     public void whenParkTruck() {
         Parking parking = new Parking(5, 5);
-        Auto volvo = new Truck("volvo");
+        Auto volvo = new Truck("a222aa777", 2);
         List<Auto> autos = Arrays.asList(volvo);
         parking.load(autos);
         assertThat(parking.delete(autos).get(0), is(volvo));
@@ -33,15 +33,15 @@ public class ParkingTest {
     @Test(expected = IllegalArgumentException.class)
     public void whenParkTruckOnFullParking() {
         Parking parking = new Parking(0, 0);
-        Auto volvo = new Truck("volvo");
+        Auto volvo = new Truck("a222aa777", 2);
         List<Auto> autos = Arrays.asList(volvo);
         parking.load(autos);
     }
 
     @Test
     public void whenParkTruckOnCarParking() {
-        Parking parking = new Parking(2, 0);
-        Auto volvo = new Truck("volvo");
+        Parking parking = new Parking(5, 0);
+        Auto volvo = new Truck("a222aa777", 5);
         List<Auto> autos = Arrays.asList(volvo);
         parking.load(autos);
         assertThat(parking.delete(autos).get(0), is(volvo));

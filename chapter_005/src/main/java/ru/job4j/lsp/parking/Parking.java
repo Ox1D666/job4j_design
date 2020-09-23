@@ -22,9 +22,8 @@ public class Parking implements Area {
             if (auto.getSize() == 1 && cars.size() < carPlace) {
                 this.cars.add(auto);
                 return true;
-            } else if (auto.getSize() == 2 && trucks.size() < truckPlace
-                    | ((truckPlace - trucks.size()) == 1 && (carPlace - cars.size()) == 1)
-                    | ((truckPlace - trucks.size()) == 0 && (carPlace - cars.size()) == 2)) {
+            } else if (trucks.size() < truckPlace
+                    | ((carPlace - cars.size()) >= auto.getSize())) {
                 this.trucks.add(auto);
                 return true;
             }
