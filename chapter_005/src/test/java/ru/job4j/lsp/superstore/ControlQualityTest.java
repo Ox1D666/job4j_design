@@ -1,4 +1,4 @@
-package ru.job4j.lsp;
+package ru.job4j.lsp.superstore;
 
 import org.junit.Test;
 import ru.job4j.lsp.superstore.products.Apple;
