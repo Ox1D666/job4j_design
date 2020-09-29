@@ -3,6 +3,7 @@ package ru.job4j.lsp.superstore;
 import ru.job4j.lsp.superstore.products.Food;
 import ru.job4j.lsp.superstore.store.Store;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,5 +31,16 @@ public class ControlQuality {
                 }
             }
         }
+    }
+
+    /**
+     * re-distribution of products.
+     */
+    public void resort() {
+        List<Food> products = new ArrayList<>();
+        for (var store : stores) {
+            products.addAll(store.remove());
+        }
+        distribute(products);
     }
 }
