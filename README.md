@@ -9,3 +9,5 @@
 "3.4. Временное хранение. git stash. [#376144]"
 "3.4. Временное хранение. git stash. [#376144] new changes"
 "3.4. Временное хранение. git stash. [#376144] вторая попытка"
+I wrote this in branch task_#376141
+Study git amend commit.
